@@ -7,7 +7,7 @@
 
 void UI::DrawHUD(const Game& game) {
   const auto& p = game.GetPlayer();
-  DrawRectangle(16, 16, 320, 78, Fade(BLACK, 0.55f));
+  DrawRectangle(16, 16, 430, 78, Fade(BLACK, 0.55f));
   DrawText(TextFormat("HP: %.0f", p.hp), 24, 24, 20, RAYWHITE);
   DrawText(TextFormat("Energy: %.0f", p.energy), 24, 48, 20, RAYWHITE);
   DrawText(game.GetObjective().c_str(), 16, 100, 20, GOLD);
@@ -34,7 +34,7 @@ void UI::DrawHUD(const Game& game) {
       }
     }
 
-    int rx = GetScreenWidth() - 380;
+    int rx = GetScreenWidth() - 420;
     int ry = 150;
     DrawText("Recipes", rx, ry - 30, 20, GOLD);
     const auto& recipes = Data::GetRecipes();

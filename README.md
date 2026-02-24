@@ -2,15 +2,17 @@
 
 OpenFacto is a C++/raylib 2D tile-based survival + automation prototype inspired by Factorio.
 
-This version implements **Milestone 1–4** baseline systems:
+This version implements **Milestone 1–6** baseline systems:
 - Fixed-tick simulation (20 TPS) + render loop (60 FPS target)
 - Deterministic procedural world generation
 - Smooth WASD movement + water/building collision
-- Camera follow + zoom
 - Mining with hold-to-mine progress bar and inventory stacking
 - Hand crafting panel (recipes list)
-- Placeable buildings (furnace/chest), rotation, deconstruction
+- Placeable buildings (furnace/chest/belt/inserter/generator/drill), rotation, deconstruction
 - Furnace smelting loop (ore + coal => plates)
+- Basic automation (belts move items, inserters feed belts)
+- Simple power model (burner generators consume coal to power boosted mining and powered drills)
+- Research starter loop (science packs consumed to unlock Tier 2)
 
 ## Build
 
@@ -35,14 +37,12 @@ Raylib is fetched automatically with CMake FetchContent.
 - Linux: `start_game.sh` (may require `chmod +x start_game.sh` once)
 - macOS: `start_game.command` (double-clickable from Finder)
 
-These scripts build (if needed) then run the game.
-
 ## Controls
 - `WASD`: move
 - Mouse wheel: zoom
 - `Left Mouse` (hold): mine resource tile
 - `Right Mouse` (press): place selected placeable item from hotbar
-- `F` + mine targeting a building: deconstruct building
+- `F` + target building while holding LMB: deconstruct building
 - `R`: rotate placement orientation
 - `UP/DOWN`: select crafting recipe
 - `ENTER` (inventory open): craft selected hand recipe
@@ -52,13 +52,6 @@ These scripts build (if needed) then run the game.
 - `` ` ``: debug overlay toggle
 - `ESC`: close window
 
-## Troubleshooting
-- If raylib download fails, verify internet access and rerun configure.
-- If graphics context creation fails, run in a desktop session with GPU/display access.
-- If CMake cache gets stale after toolchain changes, delete `build/` and reconfigure.
-
-## TODO Roadmap (Milestones 5-8)
-- Milestone 5: belts + inserters automation
-- Milestone 6: power network + drills + research/tech progression
-- Milestone 7: enemy nests + wave pressure + defenses
-- Milestone 8: full guide/objective flow + balancing + optional save/load
+## Known TODOs
+- Milestone 7: enemies, nests, waves, basic defenses
+- Milestone 8: full in-game guide screen, objective director, balancing pass, optional save/load

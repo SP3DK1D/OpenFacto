@@ -17,10 +17,15 @@ enum class ItemId {
   IronGear,
   CopperWire,
   BasicCircuit,
+  SciencePack,
   Pickaxe,
   Axe,
   Furnace,
-  Chest
+  Chest,
+  Belt,
+  Inserter,
+  BurnerGenerator,
+  PoweredDrill
 };
 
 struct ItemDef {
