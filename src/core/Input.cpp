@@ -1,0 +1,37 @@
+#include "core/Input.h"
+
+void Input::Update() {
+  hotbarPressed_ = -1;
+  for (int i = 0; i < 9; ++i) {
+    if (IsKeyPressed(KEY_ONE + i)) {
+      hotbarPressed_ = i;
+      break;
+    }
+  }
+}
+
+Vector2 Input::MoveAxis() const {
+  Vector2 move = {0.0f, 0.0f};
+  if (IsKeyDown(KEY_W)) move.y -= 1.0f;
+  if (IsKeyDown(KEY_S)) move.y += 1.0f;
+  if (IsKeyDown(KEY_A)) move.x -= 1.0f;
+  if (IsKeyDown(KEY_D)) move.x += 1.0f;
+  if (move.x == 0.0f && move.y == 0.0f) return move;
+  return Vector2Normalize(move);
+}
+
+bool Input::MineHeld() const { return IsMouseButtonDown(MOUSE_BUTTON_LEFT); }
+bool Input::PlacePressed() const { return IsMouseButtonPressed(MOUSE_BUTTON_RIGHT); }
+bool Input::DeconstructHeld() const { return IsKeyDown(KEY_F); }
+bool Input::RotatePressed() const { return IsKeyPressed(KEY_R); }
+bool Input::CraftPressed() const { return IsKeyPressed(KEY_ENTER); }
+bool Input::AttackPressed() const { return IsKeyPressed(KEY_SPACE); }
+bool Input::SavePressed() const { return IsKeyPressed(KEY_F5); }
+bool Input::LoadPressed() const { return IsKeyPressed(KEY_F9); }
+bool Input::ToggleGuidePressed() const { return IsKeyPressed(KEY_G); }
+int Input::HotbarPressed() const { return hotbarPressed_; }
+bool Input::RecipeNextPressed() const { return IsKeyPressed(KEY_DOWN); }
+bool Input::RecipePrevPressed() const { return IsKeyPressed(KEY_UP); }
+bool Input::ToggleInventoryPressed() const { return IsKeyPressed(KEY_TAB); }
+bool Input::ToggleDebugPressed() const { return IsKeyPressed(KEY_GRAVE); }
+bool Input::ToggleMinimapPressed() const { return IsKeyPressed(KEY_M); }
