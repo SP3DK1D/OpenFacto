@@ -18,6 +18,7 @@ enum class ItemId {
   CopperWire,
   BasicCircuit,
   SciencePack,
+  Ammo,
   Pickaxe,
   Axe,
   Furnace,
@@ -25,7 +26,9 @@ enum class ItemId {
   Belt,
   Inserter,
   BurnerGenerator,
-  PoweredDrill
+  PoweredDrill,
+  Wall,
+  Turret
 };
 
 struct ItemDef {

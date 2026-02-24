@@ -25,6 +25,10 @@ bool Input::PlacePressed() const { return IsMouseButtonPressed(MOUSE_BUTTON_RIGH
 bool Input::DeconstructHeld() const { return IsKeyDown(KEY_F); }
 bool Input::RotatePressed() const { return IsKeyPressed(KEY_R); }
 bool Input::CraftPressed() const { return IsKeyPressed(KEY_ENTER); }
+bool Input::AttackPressed() const { return IsKeyPressed(KEY_SPACE); }
+bool Input::SavePressed() const { return IsKeyPressed(KEY_F5); }
+bool Input::LoadPressed() const { return IsKeyPressed(KEY_F9); }
+bool Input::ToggleGuidePressed() const { return IsKeyPressed(KEY_G); }
 int Input::HotbarPressed() const { return hotbarPressed_; }
 bool Input::RecipeNextPressed() const { return IsKeyPressed(KEY_DOWN); }
 bool Input::RecipePrevPressed() const { return IsKeyPressed(KEY_UP); }

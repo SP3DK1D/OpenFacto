@@ -46,3 +46,7 @@ if (MSVC)
 else()
   target_compile_options(openfacto PRIVATE -Wall -Wextra -Wpedantic)
 endif()
+
+set_target_properties(openfacto PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)

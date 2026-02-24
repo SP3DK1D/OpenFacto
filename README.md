@@ -2,56 +2,87 @@
 
 OpenFacto is a C++/raylib 2D tile-based survival + automation prototype inspired by Factorio.
 
-This version implements **Milestone 1–6** baseline systems:
-- Fixed-tick simulation (20 TPS) + render loop (60 FPS target)
-- Deterministic procedural world generation
-- Smooth WASD movement + water/building collision
-- Mining with hold-to-mine progress bar and inventory stacking
-- Hand crafting panel (recipes list)
-- Placeable buildings (furnace/chest/belt/inserter/generator/drill), rotation, deconstruction
-- Furnace smelting loop (ore + coal => plates)
-- Basic automation (belts move items, inserters feed belts)
-- Simple power model (burner generators consume coal to power boosted mining and powered drills)
-- Research starter loop (science packs consumed to unlock Tier 2)
+## Quick Launch (Top Priority)
 
-## Build
+### Windows
+- Double-click `launch.bat`
+- Or run in terminal:
+  ```bat
+  launch.bat
+  launch.bat Release
+  ```
 
 ### Linux/macOS
 ```bash
-cmake -S . -B build
-cmake --build build -j
-./build/openfacto
+chmod +x launch.sh
+./launch.sh
+./launch.sh Release
 ```
 
-### Windows (PowerShell, Visual Studio generator)
-```powershell
-cmake -S . -B build -G "Visual Studio 17 2022"
-cmake --build build --config Release
-.\build\Release\openfacto.exe
+Launcher behavior:
+- detects and creates `build/` automatically
+- prefers Ninja when available
+- configures + builds Debug by default (Release via argument)
+- runs executable from project root, with relative paths
+
+## Manual Build
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build
+./build/bin/openfacto
 ```
 
-Raylib is fetched automatically with CMake FetchContent.
+## Milestone 7 Implemented (Enemies + Nests + Defense)
+- Nests spawn outside spawn-safe area and create enemies over time.
+- Threat scales from pollution + progression.
+- Enemy behavior: wander/chase-like movement, obstacle sidestep fallback.
+- Player melee attack (`Space`) with hit flash.
+- Player death + respawn penalty.
+- Defensive buildings: Wall + Turret.
+- Turret consumes ammo and auto-targets nearby enemies.
 
-## Double-click start files
-- Windows: `start_game.bat`
-- Linux: `start_game.sh` (may require `chmod +x start_game.sh` once)
-- macOS: `start_game.command` (double-clickable from Finder)
+### Milestone 7 controls
+- `Space`: melee attack
+- `F` + hold mining on building: deconstruct
+- Place `Wall`/`Turret` from hotbar after crafting
 
-## Controls
-- `WASD`: move
-- Mouse wheel: zoom
-- `Left Mouse` (hold): mine resource tile
-- `Right Mouse` (press): place selected placeable item from hotbar
-- `F` + target building while holding LMB: deconstruct building
-- `R`: rotate placement orientation
-- `UP/DOWN`: select crafting recipe
-- `ENTER` (inventory open): craft selected hand recipe
-- `1..9`: hotbar slot select
-- `TAB`: inventory/crafting panel
-- `M`: minimap toggle
-- `` ` ``: debug overlay toggle
-- `ESC`: close window
+### Milestone 7 smoke tests
+- Build and run with launcher.
+- Mine resources, craft ammo/turret/walls.
+- Wait for nest spawns; verify enemies chase/attack.
+- Verify turret consumes ammo and kills enemies.
+- Verify death respawn penalty behavior.
 
-## Known TODOs
-- Milestone 7: enemies, nests, waves, basic defenses
-- Milestone 8: full in-game guide screen, objective director, balancing pass, optional save/load
+## Milestone 8 Implemented (Guide + Objectives + Save/Load + QoL)
+- Full-screen guide (`G`) with controls and progression explanations.
+- Objectives checklist + next objective tracker + completion notifications.
+- Save/Load system (`F5` save, `F9` load) with seed/player/inventory/buildings/nests/stats.
+- Autosave (`autosave.ofs`) and configurable settings via `config.ini`.
+- Recipe search in inventory/crafting panel.
+- Minimap now shows pollution/nest summary.
+
+### Milestone 8 controls
+- `G`: guide toggle
+- `F5`: manual save to `savegame.ofs`
+- `F9`: manual load from `savegame.ofs`
+- `TAB`: open inventory and type to filter recipes
+
+### Milestone 8 smoke tests
+- Craft and place multiple machine types.
+- Save with `F5`, alter world, load with `F9`, confirm restoration.
+- Wait for autosave and verify `autosave.ofs` appears.
+- Open guide and objective list display.
+
+## config.ini
+Optional file in repo root:
+```ini
+autosave=1
+sim_speed=1.0
+```
+
+## Known Limitations / TODO
+- Limited-radius obstacle fallback is used instead of full A* pathfinding.
+- Pollution diffusion is global scalar, not per-chunk heat simulation.
+- Turret ammo source is player inventory (not local chest logistics).
+- Wave scripting and advanced enemy archetypes are pending.
