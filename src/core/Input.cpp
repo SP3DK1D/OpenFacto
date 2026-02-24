@@ -21,7 +21,13 @@ Vector2 Input::MoveAxis() const {
 }
 
 bool Input::MineHeld() const { return IsMouseButtonDown(MOUSE_BUTTON_LEFT); }
+bool Input::PlacePressed() const { return IsMouseButtonPressed(MOUSE_BUTTON_RIGHT); }
+bool Input::DeconstructHeld() const { return IsKeyDown(KEY_F); }
+bool Input::RotatePressed() const { return IsKeyPressed(KEY_R); }
+bool Input::CraftPressed() const { return IsKeyPressed(KEY_ENTER); }
 int Input::HotbarPressed() const { return hotbarPressed_; }
+bool Input::RecipeNextPressed() const { return IsKeyPressed(KEY_DOWN); }
+bool Input::RecipePrevPressed() const { return IsKeyPressed(KEY_UP); }
 bool Input::ToggleInventoryPressed() const { return IsKeyPressed(KEY_TAB); }
 bool Input::ToggleDebugPressed() const { return IsKeyPressed(KEY_GRAVE); }
 bool Input::ToggleMinimapPressed() const { return IsKeyPressed(KEY_M); }

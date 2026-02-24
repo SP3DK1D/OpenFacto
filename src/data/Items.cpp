@@ -4,15 +4,21 @@
 
 namespace Data {
 
-static const std::array<ItemDef, 9> kItems = {{{ItemId::None, "None", 0},
-                                               {ItemId::IronOre, "Iron Ore", 100},
-                                               {ItemId::CopperOre, "Copper Ore", 100},
-                                               {ItemId::Coal, "Coal", 100},
-                                               {ItemId::Stone, "Stone", 100},
-                                               {ItemId::Wood, "Wood", 100},
-                                               {ItemId::Pickaxe, "Pickaxe", 1},
-                                               {ItemId::Axe, "Axe", 1},
-                                               {ItemId::Chest, "Chest", 50}}};
+static const std::array<ItemDef, 15> kItems = {{{ItemId::None, "None", 0, false},
+                                                {ItemId::IronOre, "Iron Ore", 100, false},
+                                                {ItemId::CopperOre, "Copper Ore", 100, false},
+                                                {ItemId::Coal, "Coal", 100, false},
+                                                {ItemId::Stone, "Stone", 100, false},
+                                                {ItemId::Wood, "Wood", 100, false},
+                                                {ItemId::IronPlate, "Iron Plate", 100, false},
+                                                {ItemId::CopperPlate, "Copper Plate", 100, false},
+                                                {ItemId::IronGear, "Iron Gear", 100, false},
+                                                {ItemId::CopperWire, "Copper Wire", 200, false},
+                                                {ItemId::BasicCircuit, "Basic Circuit", 100, false},
+                                                {ItemId::Pickaxe, "Pickaxe", 1, false},
+                                                {ItemId::Axe, "Axe", 1, false},
+                                                {ItemId::Furnace, "Furnace", 50, true},
+                                                {ItemId::Chest, "Chest", 50, true}}};
 
 const ItemDef& GetItem(ItemId id) { return kItems[static_cast<size_t>(id)]; }
 

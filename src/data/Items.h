@@ -12,8 +12,14 @@ enum class ItemId {
   Coal,
   Stone,
   Wood,
+  IronPlate,
+  CopperPlate,
+  IronGear,
+  CopperWire,
+  BasicCircuit,
   Pickaxe,
   Axe,
+  Furnace,
   Chest
 };
 
@@ -21,6 +27,7 @@ struct ItemDef {
   ItemId id;
   std::string name;
   int maxStack;
+  bool placeable;
 };
 
 const ItemDef& GetItem(ItemId id);

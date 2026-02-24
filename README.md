@@ -2,13 +2,15 @@
 
 OpenFacto is a C++/raylib 2D tile-based survival + automation prototype inspired by Factorio.
 
-This drop implements **Milestone 1 + Milestone 2**:
-- Fixed-tick simulation (20 TPS) and render loop (60 FPS target)
-- Procedural chunk-like world generation with deterministic seed
-- Smooth WASD movement + collision with water
+This version implements **Milestone 1–4** baseline systems:
+- Fixed-tick simulation (20 TPS) + render loop (60 FPS target)
+- Deterministic procedural world generation
+- Smooth WASD movement + water/building collision
 - Camera follow + zoom
-- HUD, debug overlay, minimap toggle, inventory panel, hotbar
-- Hold-left-click mining on resource tiles and item collection into inventory
+- Mining with hold-to-mine progress bar and inventory stacking
+- Hand crafting panel (recipes list)
+- Placeable buildings (furnace/chest), rotation, deconstruction
+- Furnace smelting loop (ore + coal => plates)
 
 ## Build
 
@@ -28,34 +30,35 @@ cmake --build build --config Release
 
 Raylib is fetched automatically with CMake FetchContent.
 
+## Double-click start files
+- Windows: `start_game.bat`
+- Linux: `start_game.sh` (may require `chmod +x start_game.sh` once)
+- macOS: `start_game.command` (double-clickable from Finder)
+
+These scripts build (if needed) then run the game.
+
 ## Controls
 - `WASD`: move
 - Mouse wheel: zoom
-- `Left Mouse` (hold): mine selected resource tile
+- `Left Mouse` (hold): mine resource tile
+- `Right Mouse` (press): place selected placeable item from hotbar
+- `F` + mine targeting a building: deconstruct building
+- `R`: rotate placement orientation
+- `UP/DOWN`: select crafting recipe
+- `ENTER` (inventory open): craft selected hand recipe
 - `1..9`: hotbar slot select
-- `TAB`: inventory
+- `TAB`: inventory/crafting panel
 - `M`: minimap toggle
 - `` ` ``: debug overlay toggle
 - `ESC`: close window
 
 ## Troubleshooting
 - If raylib download fails, verify internet access and rerun configure.
-- If executable cannot find graphics context in headless environments, run locally with desktop GPU/display.
-- If CMake cache gets corrupted after toolchain changes, delete `build/` and reconfigure.
+- If graphics context creation fails, run in a desktop session with GPU/display access.
+- If CMake cache gets stale after toolchain changes, delete `build/` and reconfigure.
 
-## Architecture
-- `src/game`: game state + loop
-- `src/core`: fixed time + input abstraction
-- `src/world`: procedural generation + tile/resource simulation
-- `src/render`: world and effects rendering
-- `src/ui`: HUD and menu overlays
-- `src/data`: item/recipe/tech definitions and balance constants
-- `src/systems`: milestone placeholders for automation/combat/power progression
-
-## TODO Roadmap (Milestones 3-8)
-- Milestone 3: hand crafting + furnace smelting
-- Milestone 4: building placement + chest inventories
-- Milestone 5: belts + inserters
-- Milestone 6: power network + powered drills + tech tree research progression
-- Milestone 7: enemy nests, pathing, waves, defenses
-- Milestone 8: expanded guide/objectives, balancing pass, optional save/load
+## TODO Roadmap (Milestones 5-8)
+- Milestone 5: belts + inserters automation
+- Milestone 6: power network + drills + research/tech progression
+- Milestone 7: enemy nests + wave pressure + defenses
+- Milestone 8: full guide/objective flow + balancing + optional save/load

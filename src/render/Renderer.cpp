@@ -27,7 +27,7 @@ Color TileColor(WorldGen::TileType t) {
   }
   return MAGENTA;
 }
-}  // namespace
+} // namespace
 
 void Renderer::Draw(const Game& game, World& world, float /*alpha*/) {
   const auto& player = game.GetPlayer();
@@ -55,6 +55,14 @@ void Renderer::Draw(const Game& game, World& world, float /*alpha*/) {
     }
   }
 
+  for (const auto& [pos, b] : game.GetBuildings()) {
+    Color c = (b.type == BuildingType::Furnace) ? DARKGRAY : BROWN;
+    DrawRectangle(pos.x * tile + 3, pos.y * tile + 3, tile - 6, tile - 6, c);
+    if (b.type == BuildingType::Furnace) {
+      DrawRectangle(pos.x * tile + 3, pos.y * tile + tile - 5, (int)((tile - 6) * (b.progress / 2.5f)), 3, ORANGE);
+    }
+  }
+
   DrawRectangle((int)player.worldPos.x - 10, (int)player.worldPos.y - 10, 20, 20, YELLOW);
 
   const auto& mine = game.GetMining();
@@ -74,12 +82,12 @@ void Renderer::Draw(const Game& game, World& world, float /*alpha*/) {
   }
 
   if (game.ShowDebug()) {
-    DrawRectangle(8, GetScreenHeight() - 120, 360, 112, Fade(BLACK, 0.6f));
-    DrawText(TextFormat("Seed: %u", world.GetSeed()), 16, GetScreenHeight() - 112, 18, SKYBLUE);
-    DrawText(TextFormat("FPS: %d", GetFPS()), 16, GetScreenHeight() - 88, 18, SKYBLUE);
-    DrawText(TextFormat("Player tile: %.1f %.1f", player.worldPos.x / tile, player.worldPos.y / tile), 16,
-             GetScreenHeight() - 64, 18, SKYBLUE);
-    DrawText("TODO M3-M8: crafting, automation, power, enemies", 16, GetScreenHeight() - 40, 18, ORANGE);
+    DrawRectangle(8, GetScreenHeight() - 140, 420, 132, Fade(BLACK, 0.6f));
+    DrawText(TextFormat("Seed: %u", world.GetSeed()), 16, GetScreenHeight() - 132, 18, SKYBLUE);
+    DrawText(TextFormat("FPS: %d", GetFPS()), 16, GetScreenHeight() - 108, 18, SKYBLUE);
+    DrawText(TextFormat("Buildings: %d", (int)game.GetBuildings().size()), 16, GetScreenHeight() - 84, 18, SKYBLUE);
+    DrawText(TextFormat("Rotate: %d", game.GetRotation()), 16, GetScreenHeight() - 60, 18, SKYBLUE);
+    DrawText("TODO M5-M8: belts/inserters, power, enemies, research", 16, GetScreenHeight() - 36, 18, ORANGE);
   }
 
   EndDrawing();

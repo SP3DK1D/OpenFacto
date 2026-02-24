@@ -2,6 +2,7 @@
 
 #include <array>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include <raylib.h>
@@ -15,6 +16,15 @@
 struct ItemStack {
   Data::ItemId id = Data::ItemId::None;
   int count = 0;
+};
+
+enum class BuildingType { Furnace, Chest };
+
+struct Building {
+  BuildingType type;
+  int rotation = 0;
+  std::vector<ItemStack> inventory;
+  float progress = 0.0f;
 };
 
 struct PlayerState {
@@ -43,12 +53,20 @@ class Game {
   const MiningState& GetMining() const { return mining_; }
   const std::string& GetObjective() const { return objective_; }
   float GetZoom() const { return zoom_; }
+  int GetRecipeIndex() const { return recipeIndex_; }
+  int GetRotation() const { return rotation_; }
+  const std::unordered_map<IVec2, Building>& GetBuildings() const { return buildings_; }
 
  private:
   void Tick();
   void UpdatePlayerMovement();
   void UpdateMining();
+  void UpdateCrafting();
+  void UpdateBuilding();
+  void UpdateFurnaces();
   bool AddItem(Data::ItemId id, int amount);
+  bool RemoveItem(Data::ItemId id, int amount);
+  int CountItem(Data::ItemId id) const;
 
   Time time_;
   Input input_;
@@ -58,10 +76,13 @@ class Game {
   MiningState mining_;
   std::vector<ItemStack> inventory_;
   std::array<Data::ItemId, Balance::kHotbarSize> hotbar_;
+  std::unordered_map<IVec2, Building> buildings_;
   int hotbarIndex_ = 0;
   bool showDebug_ = false;
   bool showInventory_ = false;
   bool showMinimap_ = false;
   float zoom_ = 2.0f;
+  int recipeIndex_ = 0;
+  int rotation_ = 0;
   std::string objective_;
 };

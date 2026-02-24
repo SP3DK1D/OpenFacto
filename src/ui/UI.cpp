@@ -3,13 +3,14 @@
 #include <raylib.h>
 
 #include "data/Items.h"
+#include "data/Recipes.h"
 
 void UI::DrawHUD(const Game& game) {
   const auto& p = game.GetPlayer();
-  DrawRectangle(16, 16, 260, 74, Fade(BLACK, 0.55f));
+  DrawRectangle(16, 16, 320, 78, Fade(BLACK, 0.55f));
   DrawText(TextFormat("HP: %.0f", p.hp), 24, 24, 20, RAYWHITE);
   DrawText(TextFormat("Energy: %.0f", p.energy), 24, 48, 20, RAYWHITE);
-  DrawText(game.GetObjective().c_str(), 16, 96, 20, GOLD);
+  DrawText(game.GetObjective().c_str(), 16, 100, 20, GOLD);
 
   const int hotbarY = GetScreenHeight() - 54;
   for (int i = 0; i < 9; ++i) {
@@ -20,17 +21,26 @@ void UI::DrawHUD(const Game& game) {
   }
 
   if (game.ShowInventory()) {
-    DrawRectangle(120, 120, GetScreenWidth() - 240, GetScreenHeight() - 240, Fade(BLACK, 0.75f));
-    DrawText("Inventory (TAB)", 140, 136, 24, RAYWHITE);
+    DrawRectangle(90, 90, GetScreenWidth() - 180, GetScreenHeight() - 180, Fade(BLACK, 0.78f));
+    DrawText("Inventory + Crafting (UP/DOWN + ENTER)", 112, 110, 24, RAYWHITE);
     const auto& inv = game.GetInventory();
     for (int i = 0; i < (int)inv.size(); ++i) {
-      int x = 140 + (i % 10) * 100;
-      int y = 180 + (i / 10) * 64;
-      DrawRectangleLines(x, y, 96, 56, GRAY);
+      int x = 112 + (i % 10) * 76;
+      int y = 150 + (i / 10) * 56;
+      DrawRectangleLines(x, y, 70, 50, GRAY);
       if (inv[i].id != Data::ItemId::None) {
-        DrawText(Data::GetItem(inv[i].id).name.c_str(), x + 6, y + 8, 14, RAYWHITE);
-        DrawText(TextFormat("x%d", inv[i].count), x + 6, y + 28, 14, SKYBLUE);
+        DrawText(Data::GetItem(inv[i].id).name.c_str(), x + 4, y + 6, 12, RAYWHITE);
+        DrawText(TextFormat("x%d", inv[i].count), x + 4, y + 24, 12, SKYBLUE);
       }
+    }
+
+    int rx = GetScreenWidth() - 380;
+    int ry = 150;
+    DrawText("Recipes", rx, ry - 30, 20, GOLD);
+    const auto& recipes = Data::GetRecipes();
+    for (int i = 0; i < (int)recipes.size(); ++i) {
+      Color c = (i == game.GetRecipeIndex()) ? YELLOW : LIGHTGRAY;
+      DrawText(recipes[i].name.c_str(), rx, ry + i * 22, 18, c);
     }
   }
 }
